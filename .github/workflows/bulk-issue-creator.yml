@@ -1,3 +1,11 @@
+# GitHub Workflow only has string type input field available as an argument
+# so it is not possible to pass the issue_body as parameter
+# In case a different issue body is required than the one hard coded, then
+# Update the workflow with the updated issue body description, then
+# 1. either merge the workflow and then trigger the workflow
+# 2. or use the changed branch when triggering the action instead of main branch
+
+
 name: Bulk Issue Creater
 on:
   workflow_dispatch:
@@ -10,10 +18,14 @@ on:
         description: "Issue title (Repo name will be appended before this title)"
         type: string
         required: true
-      issue_body:
-        description: "Issue body message"
+      issue_assignee:
+        description: "Assignee for all the created issues (should've write access to the repo)"
         type: string
-        default: ""
+        default: "usamasadiq"
+      issue_label:
+        description: "Label to identify the created issues"
+        type: string
+        default: "Django 4.2 Upgrade"
 
 jobs:
   repos_list:
@@ -42,8 +54,8 @@ jobs:
       - name: Create issue
         uses: imjohnbo/issue-bot@v3
         with:
-          assignees: "usamasadiq"
-          labels: "Django 4.2 Upgrade"
+          assignees: "${{ github.event.inputs.issue_assignee }}"
+          labels: "${{ github.event.inputs.issue_label }}"
           title: "[${{ matrix.repos }}]: ${{github.event.inputs.issue_title}}"
           body: |
             ## Description
@@ -54,9 +66,9 @@ jobs:
             - [ ] Update the trove classifiers in setup.py, setup.cfg or pyproject.toml files.
             - [ ] Run and verify all tests are passing in the CI for Django 4.2
             - [ ] Run available code-mods to fix the failing tests
-            - [ ] Add CHANGELOG entry with description "Support added for Django 4.2"
+            - [ ] Add CHANGELOG entry with description “Support added for Django 4.2”
             - [ ] Bump the package version and release a new version on GitHub & PyPI (whichever is applicable)
-            - [ ] Update the repo support field in the Dependency Upgrade Sheet. 
+            - [ ] Update the repo support field in the Dependency Upgrade Sheet.
 
         env:
           GITHUB_TOKEN: ${{ secrets.requirements_bot_github_token }}
