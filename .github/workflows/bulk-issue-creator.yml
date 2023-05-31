@@ -21,7 +21,7 @@ on:
       issue_assignee:
         description: "Assignee for all the created issues (should've write access to the repo)"
         type: string
-        default: "usamasadiq"
+        default: ""
       issue_label:
         description: "Label to identify the created issues"
         type: string
@@ -54,21 +54,21 @@ jobs:
       - name: Create issue
         uses: imjohnbo/issue-bot@v3
         with:
-          assignees: "${{ github.event.inputs.issue_assignee }}"
           labels: "${{ github.event.inputs.issue_label }}"
           title: "[${{ matrix.repos }}]: ${{github.event.inputs.issue_title}}"
           body: |
             ## Description
-            Follow and Complete all of the following steps for the issue to be marked as done.
+            If latest PyPI release does not have Django 4.2 support, then 
 
-            - [ ] Update tox & Github action workflow using modernisers to add support for Django 4.2
-            - [ ] Remove any versions of Python earlier than 3.8 from tox.ini, .travis.yml, and GitHub Actions workflows.
-            - [ ] Update the trove classifiers in setup.py, setup.cfg or pyproject.toml files.
-            - [ ] Run and verify all tests are passing in the CI for Django 4.2
-            - [ ] Run available code-mods to fix the failing tests
-            - [ ] Add CHANGELOG entry with description “Support added for Django 4.2”
-            - [ ] Bump the package version and release a new version on GitHub & PyPI (whichever is applicable)
-            - [ ] Update the repo support field in the Dependency Upgrade Sheet.
+            - [ ] Verify if latest master/main branch has support for Django 4.2
+            - [ ] Create issue in the upstream repo for Django 4.2 upgrade if no issue exists already.
+            - [ ] Create pull request in upstream repo for Django 4.2 support if no pull request exists already.
+            - [ ] Fork the repo, Add test configurations for Django 4.0, 4.1 and 4.2 in CI
+            - [ ] Run available django-code-mods to fix the failing tests
+            - [ ] Fix any remaining Django deprecation warnings or test failures in all the test configurations.
+            - [ ] Update the Trove classifiers in any setup.py, setup.cfg, or pyproject.toml files
+            - [ ] Update status in the Dependency Sheet if the package has support for Django 4.2
+            - [ ] Update the repo support field in the Dependency Upgrade Sheet once a new version with support has been released.
 
         env:
           GITHUB_TOKEN: ${{ secrets.requirements_bot_github_token }}
