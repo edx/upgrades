@@ -41,6 +41,7 @@ jobs:
   
   check_list: 
     name: console list
+    needs: repos_list
     runs-on: ubuntu-20.04
     steps:
     - name: what the hell
