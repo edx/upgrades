@@ -38,6 +38,10 @@ jobs:
       id: repos_list
       run: |
         echo "list=[${{github.event.inputs.repos_list}}]" >> $GITHUB_OUTPUT
+  
+  check_list: 
+    name: console list
+    run: echo steps.repos_list.outputs.output1
 
   create_bulk_issues:
     name: Create Bulk Issues
@@ -48,7 +52,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        repos: echo needs.repos_list.outputs.list && ${{fromJson(needs.repos_list.outputs.output1)}}
+        repos: ${{fromJson(needs.repos_list.outputs.output1)}}
 
     steps:
       - name: Create issue
