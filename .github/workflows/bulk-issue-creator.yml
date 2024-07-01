@@ -48,7 +48,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        repos: ${{fromJson(needs.repos_list.outputs.output1)}}
+        repos: echo needs.repos_list.outputs.list && ${{fromJson(needs.repos_list.outputs.output1)}}
 
     steps:
       - name: Create issue
