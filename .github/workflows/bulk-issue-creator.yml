@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - name: what the hell
-      run: echo steps.repos_list.outputs.output1
+      run: echo ${{steps.repos_list.outputs.output1}}
 
   create_bulk_issues:
     name: Create Bulk Issues
