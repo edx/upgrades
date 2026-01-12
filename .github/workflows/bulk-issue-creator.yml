@@ -30,7 +30,7 @@ on:
 jobs:
   repos_list:
     name: Parse repos list
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.repos_list.outputs.list }}
     steps:
@@ -41,7 +41,7 @@ jobs:
 
   create_bulk_issues:
     name: Create Bulk Issues
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     needs: [ repos_list ]
     permissions:
       issues: write
